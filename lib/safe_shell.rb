@@ -16,12 +16,18 @@ module SafeShell
     read_end.close
 
     def output.succeeded?
-      $?.success?
+      # Cant use ||= here because we're sometimes storing false
+      @success = @success.nil? ? $?.success? : @success
     end
 
     def output.exitstatus
-      $?.exitstatus
+      @exitstatus ||= $?.exitstatus
     end
+
+    #cause memoizing to cache correct values
+    output.succeeded?
+    output.exitstatus
+
     output
   end
 

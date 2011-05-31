@@ -23,9 +23,25 @@ describe "SafeShell" do
     SafeShell.execute('true').exitstatus.should == 0
   end
 
+  it "should have unique exit statuses for each returned string" do
+    false_result = SafeShell.execute('false')
+    true_result = SafeShell.execute('true')
+
+    false_result.exitstatus.should == 1
+    true_result.exitstatus.should == 0
+  end
+
   it "should augment the returned string with a succeeded? method" do
     SafeShell.execute('false').succeeded?.should be_false
     SafeShell.execute('true').succeeded?.should be_true
+  end
+
+  it "should have unique succeeded? for each returned string" do
+    false_result = SafeShell.execute('false')
+    true_result = SafeShell.execute('true')
+
+    false_result.succeeded?.should be_false
+    true_result.succeeded?.should be_true
   end
 
   it "should handle a Pathname object passed as an argument" do
