@@ -18,6 +18,11 @@ describe "SafeShell" do
     $?.exitstatus.should == 1
   end
 
+  it "should augment the returned string with the exit status" do
+    SafeShell.execute('false').exitstatus.should == 1
+    SafeShell.execute('true').exitstatus.should == 0
+  end
+
   it "should handle a Pathname object passed as an argument" do
     expect { SafeShell.execute("ls", Pathname.new("/tmp")) }.should_not raise_error
   end
