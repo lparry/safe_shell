@@ -23,6 +23,11 @@ describe "SafeShell" do
     SafeShell.execute('true').exitstatus.should == 0
   end
 
+  it "should augment the returned string with a succeeded? method" do
+    SafeShell.execute('false').succeeded?.should be_false
+    SafeShell.execute('true').succeeded?.should be_true
+  end
+
   it "should handle a Pathname object passed as an argument" do
     expect { SafeShell.execute("ls", Pathname.new("/tmp")) }.should_not raise_error
   end

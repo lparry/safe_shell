@@ -15,6 +15,10 @@ module SafeShell
     Process.waitpid(pid)
     read_end.close
 
+    def output.succeeded?
+      $?.success?
+    end
+
     def output.exitstatus
       $?.exitstatus
     end
